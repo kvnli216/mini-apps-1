@@ -1,14 +1,6 @@
-// the first move always starts with player X
-// the app detects a win or tie and displays an appropriate message
-// a button resets the game for a new round of gameplay
-let submitName = (event) => {
-  event.preventDefault()
-  let text = event.target.firstElementChild.value;
-  let id = event.target.firstElementChild.id;
-  let entry = document.getElementById(`${id} name`);
-  entry.innerHTML = text + ':';
-};
-
+// ---------------------------------------
+//                 Model
+// ---------------------------------------
 let scoreP1 = 0;
 let scoreP2 = 0;
 
@@ -18,6 +10,39 @@ let board = [
   ['','',''], // row 1
   ['','','']  // row 2
 ];
+
+// check for winner
+let checkWinner = (X, O) => {
+  if (X === 3) {
+    scoreP1++;
+    isPlayerOne = !isPlayerOne;
+    document.getElementById('P1 score').innerHTML = scoreP1;
+    alert('Player 1 winner!');
+  } else if (O === 3) {
+    scoreP2++;
+    isPlayerOne = !isPlayerOne;
+    document.getElementById('P2 score').innerHTML = scoreP2;
+    alert('Player 2 winner!');
+  }
+}
+
+
+// ---------------------------------------
+//                 View
+// ---------------------------------------
+
+// ---------------------------------------
+//                 Controller
+// ---------------------------------------
+
+let submitName = (event) => {
+  event.preventDefault()
+  let text = event.target.firstElementChild.value;
+  let id = event.target.firstElementChild.id;
+  let entry = document.getElementById(`${id} name`);
+  entry.innerHTML = text + ':';
+};
+
 
 let placePiece = (event) => {
   if (event.target.innerText !== '_') {
@@ -60,21 +85,6 @@ let resetBoard = () => {
     ['','','']  // row 2
   ];
 };
-
-// check for a win
-let checkWinner = (X, O) => {
-  if (X === 3) {
-    scoreP1++;
-    isPlayerOne = !isPlayerOne;
-    document.getElementById('P1 score').innerHTML = scoreP1;
-    alert('Player 1 winner!');
-  } else if (O === 3) {
-    scoreP2++;
-    isPlayerOne = !isPlayerOne;
-    document.getElementById('P2 score').innerHTML = scoreP2;
-    alert('Player 2 winner!');
-  }
-}
 
 let trackEndCondition = () => {
   let xCount = 0;
@@ -141,62 +151,3 @@ let trackEndCondition = () => {
     alert('Game over: Tied game!');
   }
 };
-
-  // console.log(board);
-
-
-// track current state of board (run after each piece is played)
-// if winning condition
-//   alert winner (X or O)
-// if tied condition
-//   alert tied!
-
-// add if condition that when board filled, cannot place pieces anymore
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// let board = [];
-
-// let assembleRow = (piece, pos = null) => {
-//   let row = ['','|','','|',''];
-//   if (pos >= 0 && pos <= 2) {
-//     row[pos + pos] = piece;
-//   }
-//   return row;
-// };
-
-// // x|x|x
-// // -----
-// // o|o|o
-
-// // let assembleDiv = (board => {
-// //   board.push(['-','-','-','-','-']);
-// // });
-// let div = ['-','-','-','-','-'];
-
-// let assembleBoard = ((r1 = null, r2 = null, r3 = null) => {
-  
-//   board.push(assembleRow('o', r1));
-//   board.push(div);
-//   board.push(assembleRow('o', r2));
-//   board.push(div);
-//   board.push(assembleRow('o', r3));
-//   return board;
-// });
-
-// board = assembleBoard();
-
-
-
-// document.getElementById("board").innerHTM  L(board);
