@@ -1,6 +1,17 @@
 // the first move always starts with player X
 // the app detects a win or tie and displays an appropriate message
 // a button resets the game for a new round of gameplay
+let submitName = (event) => {
+  event.preventDefault()
+  let text = event.target.firstElementChild.value;
+  let id = event.target.firstElementChild.id;
+  let entry = document.getElementById(`${id} name`);
+  entry.innerHTML = text + ':';
+};
+
+let scoreP1 = 0;
+let scoreP2 = 0;
+
 let isPlayerOne = true;    
 let board = [
   ['','',''], // row 0
@@ -53,8 +64,14 @@ let resetBoard = () => {
 // check for a win
 let checkWinner = (X, O) => {
   if (X === 3) {
+    scoreP1++;
+    isPlayerOne = !isPlayerOne;
+    document.getElementById('P1 score').innerHTML = scoreP1;
     alert('Player 1 winner!');
   } else if (O === 3) {
+    scoreP2++;
+    isPlayerOne = !isPlayerOne;
+    document.getElementById('P2 score').innerHTML = scoreP2;
     alert('Player 2 winner!');
   }
 }
@@ -63,15 +80,18 @@ let trackEndCondition = () => {
   let xCount = 0;
   let oCount = 0; 
   //  win condition: all of a row
-  board[0].forEach(pos => {
-    if (pos === 'X') {
-      xCount++;
-    } else if (pos === 'O') {
-      oCount++;
-    }
-    checkWinner(xCount, oCount);
+  board.forEach(row => {
+    row.forEach(pos => {
+      if (pos === 'X') {
+        xCount++;
+      } else if (pos === 'O') {
+        oCount++;
+      }
+      checkWinner(xCount, oCount);
+    });
+    xCount = oCount = 0; 
   });
-  xCount = oCount = 0;  
+
 
   //  win condition: all of a col
   for (let i = 0; i < 3; i++) {
@@ -100,7 +120,7 @@ let trackEndCondition = () => {
   for (let i = 0; i < 3; i++) {
     if (board[i][2 - i] === 'X') {
       xCount++;
-      } else if (board[2 - i][2 - i] === 'O') {
+      } else if (board[i][2 - i] === 'O') {
       oCount++;
     }
     checkWinner(xCount, oCount);

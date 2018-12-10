@@ -3,6 +3,28 @@
   <meta charset="utf-8">
   <title>MiniApp1: Tic Tac Toe</title>
   <body>
+    <button onClick='resetBoard()'>New Game</button>
+
+    <div>------------------------------------</div> 
+
+    <form onsubmit='submitName(event)'>
+      Player 1: <input type='text' id='P1'>
+      <input type="submit">
+    </form>
+
+    <form onsubmit='submitName(event)'>
+        Player 2: <input type='text' id='P2'>
+        <input type="submit">
+      </form>
+
+    <div>------------------------------------</div>
+
+    <span id='P1 name'>Player1:</span>
+      <span id='P1 score'>0</span>
+    <div></div>
+    <span id='P2 name'>Player2:</span>
+      <span id='P2 score'>0</span>
+    <div>------------------------------------</div>
       <table>
           <thead>
               <tr>
@@ -27,7 +49,7 @@
               </tr>
           </tbody>
       </table>
-      <button onClick='resetBoard()'>New Game</button>
+      
   </body>
 
   <script src="./app.js"></script>
