@@ -31,9 +31,31 @@ let checkWinner = (X, O) => {
 //                 View
 // ---------------------------------------
 
+let renderBoard = () => { 
+  // let board = document.getElementById('board');
+  // debugger;
+  for (let i = 0; i < 3; i++) { // iterate through rows
+    for (let j = 0; j < 3; j++) { // iterate through cols
+      let entry = document.getElementById(`${i},${j}`);
+      entry.innerHTML = board[i][j];
+    }
+  }
+}
+
+
 // ---------------------------------------
 //                 Controller
 // ---------------------------------------
+
+// new game button
+let resetBoard = () => {
+  board = [
+    ['','',''], // row 0
+    ['','',''], // row 1
+    ['','','']  // row 2
+  ];
+  renderBoard();
+};
 
 let submitName = (event) => {
   event.preventDefault()
@@ -45,46 +67,36 @@ let submitName = (event) => {
 
 
 let placePiece = (event) => {
-  if (event.target.innerText !== '_') {
+  let row = Number(event.target.id.split(',')[0]);
+  let col = Number(event.target.id.split(',')[1]);
+
+  if (board[row][col] !== '') {
     alert('Invalid piece placement: Select another spot on the board!');
   } else {
     if (isPlayerOne) {
-      // debugger;  
-      event.target.innerText = 'X';
+      board[row][col] = 'X';
       isPlayerOne = false;
 
-      // track board state
-      let row = Number(event.target.id.split(',')[0]);
-      let col = Number(event.target.id.split(',')[1]);
-      board[row][col] = 'X';
+      // // track board state
+      // let row = Number(event.target.id.split(',')[0]);
+      // let col = Number(event.target.id.split(',')[1]);
+      // board[row][col] = 'X';
       trackEndCondition();
     } else {
-      event.target.innerText = 'O';
+      board[row][col] = 'O';
       isPlayerOne = true;
 
       // track board state
-      let row = Number(event.target.id.split(',')[0]);
-      let col = Number(event.target.id.split(',')[1]);
-      board[row][col] = 'O';
+      // let row = Number(event.target.id.split(',')[0]);
+      // let col = Number(event.target.id.split(',')[1]);
+      // board[row][col] = 'O';
       trackEndCondition();
     }
   }
+  renderBoard();
 };
 
-let resetBoard = () => {
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      let id = [i, j].join(',');
-      let pos = document.getElementById(id)
-      pos.innerHTML = '_';
-    }
-  }
-  board = [
-    ['','',''], // row 0
-    ['','',''], // row 1
-    ['','','']  // row 2
-  ];
-};
+
 
 let trackEndCondition = () => {
   let xCount = 0;
