@@ -1,6 +1,8 @@
 // ---------------------------------------
 //                 Model
 // ---------------------------------------
+let modeR = false;
+
 let scoreP1 = 0;
 let scoreP2 = 0;
 
@@ -15,25 +17,34 @@ let board = [
 let checkWinner = (X, O) => {
   if (X === 3) {
     scoreP1++;
-    isPlayerOne = !isPlayerOne;
+    togglePlayerTurn(isPlayerOne);
     document.getElementById('P1 score').innerHTML = scoreP1;
     alert('Player 1 winner!');
   } else if (O === 3) {
     scoreP2++;
-    isPlayerOne = !isPlayerOne;
+    togglePlayerTurn(isPlayerOne);
     document.getElementById('P2 score').innerHTML = scoreP2;
     alert('Player 2 winner!');
   }
-}
+};
 
+let togglePlayerTurn = (turn) => {
+  isPlayerOne = !turn;    
+};
 
+let toggleModeButton = (mode) => {
+  let entry = document.getElementById('modeR');
+  if (mode) {
+    entry.firstChild.textContent = 'ON';
+  } else {
+    entry.firstChild.textContent = 'OFF';
+  }
+};
 // ---------------------------------------
 //                 View
 // ---------------------------------------
 
 let renderBoard = () => { 
-  // let board = document.getElementById('board');
-  // debugger;
   for (let i = 0; i < 3; i++) { // iterate through rows
     for (let j = 0; j < 3; j++) { // iterate through cols
       let entry = document.getElementById(`${i},${j}`);
@@ -42,10 +53,25 @@ let renderBoard = () => {
   }
 }
 
+let rotateBoard = () => {
+  let newBoard = [[],[],[]];
+  for (let i = 0; i < 3; i++) { // iterate through rows
+    for (let j = 0; j < 3; j++) { // iterate through cols
+      newBoard[j][2-i] = board[i][j];
+    }
+  }
+  board = newBoard;
+}
 
 // ---------------------------------------
 //                 Controller
 // ---------------------------------------
+
+// toggle Rotation Mode
+let toggleModeR = () => {
+  modeR = !modeR;
+  toggleModeButton(modeR);
+}
 
 // new game button
 let resetBoard = () => {
@@ -75,23 +101,16 @@ let placePiece = (event) => {
   } else {
     if (isPlayerOne) {
       board[row][col] = 'X';
-      isPlayerOne = false;
-
-      // // track board state
-      // let row = Number(event.target.id.split(',')[0]);
-      // let col = Number(event.target.id.split(',')[1]);
-      // board[row][col] = 'X';
+      togglePlayerTurn(isPlayerOne);
       trackEndCondition();
     } else {
       board[row][col] = 'O';
-      isPlayerOne = true;
-
-      // track board state
-      // let row = Number(event.target.id.split(',')[0]);
-      // let col = Number(event.target.id.split(',')[1]);
-      // board[row][col] = 'O';
+      togglePlayerTurn(isPlayerOne); 
       trackEndCondition();
     }
+  }
+  if (modeR) {
+    rotateBoard();  
   }
   renderBoard();
 };
@@ -113,7 +132,6 @@ let trackEndCondition = () => {
     });
     xCount = oCount = 0; 
   });
-
 
   //  win condition: all of a col
   for (let i = 0; i < 3; i++) {
@@ -138,6 +156,7 @@ let trackEndCondition = () => {
     checkWinner(xCount, oCount);
   }
   xCount = oCount = 0;
+
   //  win condition: min diag
   for (let i = 0; i < 3; i++) {
     if (board[i][2 - i] === 'X') {
@@ -148,7 +167,6 @@ let trackEndCondition = () => {
     checkWinner(xCount, oCount);
   }
   xCount = oCount = 0;
-
 
   // check for a tie
   let pieceCount = 0;
