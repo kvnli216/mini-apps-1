@@ -1,16 +1,20 @@
 const express = require('express');
 const morgan = require('morgan');
+const bodyParser = require('body-parser');
 const app = express();
+const router = require('./serverRouter');
+// const db = require('./db');
+// const cors = require('cors');
 
 const port = 1337;
-
 
 // Middleware
 app.use(morgan('tiny'));
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded());
 
-// Request Handling
-
+// Request Handling (routed)
+app.use('/', router);
 
 // 404
 app.use((req, res, next) => {
