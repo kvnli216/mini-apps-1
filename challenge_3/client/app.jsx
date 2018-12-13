@@ -2,20 +2,21 @@ function AcctView() {
   return (
     // <form onSubmit={this.handleSubmit}>
     <div> 
-      <form>
+      <form method='POST' action=''>
         <label>
           Name:
           {/* <textarea value={this.state.value} onChange={this.handleChange} /> */}
-          <input id='name'/>
+          <input type='text' id='name' name='name'/>
         </label> <br></br>
         <label>
           Email:
-          <input id='email'/>
+          <input type='text' id='email' name='email'/>
         </label> <br></br>
         <label>
           Password:
-          <input id='password'/>
+          <input type='text' id='password' name='password'/>
         </label>
+        <input type='submit' name='submit'></input>
       </form>
       <button id='next'>Next</button>
     </div>

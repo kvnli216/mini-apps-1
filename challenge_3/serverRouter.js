@@ -2,7 +2,7 @@ const router = require('express').Router();
 const shoppingController = require('./serverController');
 
 // CREATE ACCOUNT
-router.post('/account', shoppingController.createAccount);
+router.post('', shoppingController.createAccount);
 
 // CREATE SHIPPINGINFO
 // router.post('/shipping', shoppingController.create);
