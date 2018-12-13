@@ -8,7 +8,11 @@ const Account = connection.define('account', {
 });
 
 const ShippingInfo = connection.define('shipping', {
-  address: Sequelize.STRING,
+  line1: Sequelize.STRING,
+  line2: Sequelize.STRING,
+  city: Sequelize.STRING,
+  state: Sequelize.STRING,
+  zipcode: Sequelize.INTEGER,
   phone: Sequelize.TEXT,
 });
 
