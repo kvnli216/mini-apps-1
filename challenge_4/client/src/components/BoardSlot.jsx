@@ -2,7 +2,7 @@ import React from 'react';
 
 const BoardSlot = (props) => {
   return (
-    <div>
+    <React.Fragment>
       {
         props.col.map((slot, index) => {
           return (
@@ -12,7 +12,7 @@ const BoardSlot = (props) => {
           );
         })
       }
-    </div>
+    </React.Fragment>
   );
 }
 

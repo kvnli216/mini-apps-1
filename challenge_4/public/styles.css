@@ -1,7 +1,9 @@
 .slot {
   height: 50px;
+  line-height: 50px;
   width: 50px;
   border: 1px solid black;
+  text-align: center;
 }
 
 .col:hover {

@@ -8,7 +8,7 @@ const Board = (props) => {
         
         props.board.map((col, index) => {
           return (
-            <div key={index} className='col' onClick={props.test}>
+            <div key={index} id={index} className='col' onClick={props.selectCol}>
               <BoardSlot col={col} />
               <br></br>
             </div>

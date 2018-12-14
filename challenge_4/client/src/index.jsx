@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Board from './components/Board.jsx'
+import Board from './components/Board.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -8,21 +8,39 @@ class App extends React.Component {
 
     this.state = {
       board: [
-        [0,0,0,0,0,1],
-        [1,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-      ]
+        ['','','','','',''],
+        ['','','','','',''],
+        ['','','','','',''],
+        ['','','','','',''],
+        ['','','','','',''],
+        ['','','','','',''],
+        ['','','','','',''],
+      ],
+      playerOneTurn: true
     };
   }
   
   selectCol(e) {
     e.preventDefault();
-    console.log(e);
-    console.log(e.target);
+    let slotChoice = Number(e.target.parentElement.id); // index of col
+    let newBoard = this.state.board;
+    for (let i = newBoard[slotChoice].length-1; i >= 0; i--) {
+      if (newBoard[slotChoice][i] === '') {
+        if (this.state.playerOneTurn) {
+          newBoard[slotChoice][i] = 'O';
+        } else {
+          newBoard[slotChoice][i] = 'X';
+        }
+        i = 0;
+      }
+    }
+    
+    this.setState(state => {
+      return {
+        board: newBoard,
+        playerOneTurn: !this.state.playerOneTurn
+      }
+    });
   }
 
   render() {
