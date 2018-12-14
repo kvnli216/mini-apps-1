@@ -22,6 +22,7 @@ class App extends React.Component {
     this.togglePlayerTurn = this.togglePlayerTurn.bind(this);
     this.updateBoard = this.updateBoard.bind(this);
     this.horizontalWin = this.horizontalWin.bind(this);
+    this.verticalWin = this.verticalWin.bind(this);
   }
   
   // ------------------------------------------------
@@ -48,7 +49,6 @@ class App extends React.Component {
   // ------------------------------------------------
 
   horizontalWin() {
-    console.log('running win check');
     let board = this.state.board;
     this.state.board.forEach((col, indexC) => { // iterate through every column
       col.forEach((slot, indexS) => { // iterate through slots of a column
@@ -58,6 +58,34 @@ class App extends React.Component {
           // check piece match for next 3 columns
           for (let i = 1; i < 4; i++) {
             if (board[indexC + i][indexS] !== piece) {
+              isWinner = false;
+              i = 4;
+            }
+          }
+          if (isWinner) {
+            if (this.state.playerOneTurn) {
+              alert('Player 1 Wins!');
+            } else {
+              alert('Player 2 Wins!');
+            }
+          }
+          return isWinner; // Todo: update scoreboard
+        }
+      });
+    });
+  }
+
+
+  verticalWin() {
+    let board = this.state.board;
+    this.state.board.forEach((col) => { // iterate through every column
+      col.forEach((slot, indexS) => { // iterate through slots of a column
+        if (slot !== '') { // if a piece exists here
+          let piece = slot;
+          let isWinner = true;
+          // check piece match for next 3 slots
+          for (let i = 1; i < 4; i++) {
+            if (col[indexS + i] !== piece) {
               isWinner = false;
               i = 4;
             }
@@ -97,6 +125,7 @@ class App extends React.Component {
     this.togglePlayerTurn();
     this.updateBoard(newBoard);
     this.horizontalWin();
+    this.verticalWin();
   }
 
   render() {
