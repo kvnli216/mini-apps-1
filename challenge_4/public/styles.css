@@ -1,0 +1,13 @@
+.slot {
+  height: 50px;
+  width: 50px;
+  border: 1px solid black;
+}
+
+.col:hover {
+  background-color: LightSkyBlue;
+}
+
+.Board {
+  display: flex;
+}
